@@ -309,7 +309,7 @@ wire cmac_stat_rx_packet_bad_fcs;
 wire cmac_stat_rx_packet_large;
 wire [2:0] cmac_stat_rx_packet_small;
 
-reg cmac_ctl_rx_enable_reg = 1'b1;
+(* ASYNC_REG = "TRUE" *)reg cmac_ctl_rx_enable_reg = 1'b1;
 reg cmac_ctl_rx_force_resync_reg = 1'b0;
 reg cmac_ctl_rx_test_pattern_reg = 1'b0;
 
@@ -463,7 +463,7 @@ always @(posedge drp_clk) begin
 end
 
 reg cmac_ctl_rx_enable_drp_reg = 1'b1;
-reg cmac_ctl_rx_enable_sync_reg = 1'b1;
+(* ASYNC_REG = "TRUE" *)reg cmac_ctl_rx_enable_sync_reg = 1'b1;
 reg cmac_ctl_rx_force_resync_drp_reg = 1'b0;
 reg cmac_ctl_rx_force_resync_sync_reg = 1'b0;
 reg cmac_ctl_rx_test_pattern_drp_reg = 1'b0;
@@ -518,7 +518,7 @@ always @(posedge drp_clk) begin
 end
 
 reg cmac_ctl_tx_enable_drp_reg = 1'b1;
-reg cmac_ctl_tx_enable_sync_reg = 1'b1;
+(* ASYNC_REG = "TRUE" *)reg cmac_ctl_tx_enable_sync_reg = 1'b1;
 reg cmac_ctl_tx_send_idle_drp_reg = 1'b0;
 reg cmac_ctl_tx_send_idle_sync_reg = 1'b0;
 reg cmac_ctl_tx_send_rfi_drp_reg = 1'b0;
