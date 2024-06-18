@@ -1,0 +1,25 @@
+CAPI=2:
+name: uwcse:beehive:corundum_beehive_app:0.1
+description: Beehive UDP design
+
+filesets:
+    rtl:
+        files:
+            - ../../lib/axis/rtl/axis_arb_mux.v
+            - ../../lib/axis/rtl/arbiter.v
+            - ../../lib/axis/rtl/priority_encoder.v
+            - beehive_wrapper.sv
+        depend:
+            - uwcse:beehive:beehive_vr_test
+            - uwcse:beehive:corundum_beehive_converters
+        file_type: systemVerilogSource
+
+targets:
+    default:
+        filesets: [rtl]
+        default_tool: vivado
+        toplevel: [udp_echo_top]
+    fpga:
+        default_tool: vivado
+        toplevel: [udp_echo_top]
+        filesets: [rtl]

@@ -52,6 +52,10 @@ else
   XDC_FILES_REL = $(PROJECT).xdc
 endif
 
+ifdef UTIL_FILES
+	UTIL_FILES_REL = $(patsubst %, ../%, $(filter-out /% ./%,$(UTIL_FILES))) $(filter /% ./%,$(UTIL_FILES))
+endif
+
 ###################################################################
 # Main Targets
 #
@@ -90,9 +94,15 @@ create_project.tcl: Makefile $(XCI_FILES_REL) $(IP_TCL_FILES_REL)
 	echo "add_files -fileset sources_1 defines.v $(SYN_FILES_REL)" >> $@
 	echo "set_property top $(FPGA_TOP) [current_fileset]" >> $@
 	echo "add_files -fileset constrs_1 $(XDC_FILES_REL)" >> $@
+	echo "add_files -fileset utils_1 $(UTIL_FILES_REL)" >> $@
 	for x in $(XCI_FILES_REL); do echo "import_ip $$x" >> $@; done
 	for x in $(IP_TCL_FILES_REL); do echo "source $$x" >> $@; done
 	for x in $(CONFIG_TCL_FILES_REL); do echo "source $$x" >> $@; done
+	# Mark the include files as header files
+	for x in $(INC_FILES_REL); do echo "set_property file_type \"Verilog Header\" [get_files $$x]\n\
+	    set_property is_global_include \"1\" [get_files $$x]">> $@; done
+	echo "set_property is_global_include \"0\" [get_files *.svh]" >> $@
+	
 
 update_config.tcl: $(CONFIG_TCL_FILES_REL) $(SYN_FILES_REL) $(INC_FILES_REL) $(XDC_FILES_REL)
 	echo "open_project -quiet $(PROJECT).xpr" > $@
@@ -112,6 +122,9 @@ $(PROJECT).runs/synth_1/$(PROJECT).dcp: create_project.tcl update_config.tcl $(S
 # implementation run
 $(PROJECT).runs/impl_1/$(PROJECT)_routed.dcp: $(PROJECT).runs/synth_1/$(PROJECT).dcp
 	echo "open_project $(PROJECT).xpr" > run_impl.tcl
+	echo "set_property strategy Performance_ExplorePostRoutePhysOpt [get_runs impl_1]" >> run_impl.tcl
+	echo "set_property STEPS.POST_ROUTE_PHYS_OPT_DESIGN.TCL.POST [ get_files $(UTIL_FILES_REL) -of [get_fileset utils_1] ] [get_runs impl_1]" >> run_impl.tcl
+	echo "set_property STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.DIRECTIVE AggressiveExplore [get_runs impl_1]" >> run_impl.tcl
 	echo "reset_run impl_1" >> run_impl.tcl
 	echo "launch_runs -jobs 4 impl_1" >> run_impl.tcl
 	echo "wait_on_run impl_1" >> run_impl.tcl

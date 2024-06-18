@@ -58,7 +58,7 @@ dict set params RELEASE_INFO  [format "32'h%08x" $release_info]
 dict set params CMS_ENABLE "1"
 
 # Structural configuration
-dict set params IF_COUNT "2"
+dict set params IF_COUNT "1"
 dict set params PORTS_PER_IF "1"
 dict set params SCHED_PER_IF [dict get $params PORTS_PER_IF]
 dict set params PORT_MASK "0"
@@ -99,7 +99,7 @@ dict set params TX_SCHEDULER_PIPELINE [dict get $params TX_QUEUE_PIPELINE]
 dict set params TDMA_INDEX_WIDTH "6"
 
 # Interface configuration
-dict set params PTP_TS_ENABLE "1"
+dict set params PTP_TS_ENABLE "0"
 dict set params TX_CPL_FIFO_DEPTH "32"
 dict set params TX_CHECKSUM_ENABLE "1"
 dict set params RX_HASH_ENABLE "1"
@@ -115,13 +115,13 @@ dict set params RX_RAM_SIZE "131072"
 
 # RAM configuration
 dict set params DDR_CH "4"
-dict set params DDR_ENABLE "0"
+dict set params DDR_ENABLE "1"
 dict set params AXI_DDR_ID_WIDTH "8"
 dict set params AXI_DDR_MAX_BURST_LEN "256"
 
 # Application block configuration
-dict set params APP_ID "32'h00000000"
-dict set params APP_ENABLE "0"
+dict set params APP_ID "32'h12340001"
+dict set params APP_ENABLE "1"
 dict set params APP_CTRL_ENABLE "1"
 dict set params APP_DMA_ENABLE "1"
 dict set params APP_AXIS_DIRECT_ENABLE "1"

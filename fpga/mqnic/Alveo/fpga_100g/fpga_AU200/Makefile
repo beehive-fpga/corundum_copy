@@ -1,5 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause-Views
 # Copyright (c) 2019-2023 The Regents of the University of California
+#
+BEEHIVE_ROOT=$(BEEHIVE_PROJECT_ROOT)/
 
 # FPGA settings
 FPGA_PART = xcu200-fsgd2104-2-e
@@ -114,6 +116,9 @@ SYN_FILES += lib/pcie/rtl/pcie_us_if_cq.v
 SYN_FILES += lib/pcie/rtl/pcie_us_cfg.v
 SYN_FILES += lib/pcie/rtl/pulse_merge.v
 
+SYN_FILES += app/template/rtl/mqnic_app_block.v
+SYN_FILES += lib/axi/rtl/axil_ram.v
+
 # XDC files
 XDC_FILES = fpga_au200.xdc
 XDC_FILES += placement_au200.xdc
@@ -130,12 +135,16 @@ XDC_FILES += ../../../common/syn/vivado/rb_drp.tcl
 XDC_FILES += ../../../common/syn/vivado/cmac_gty_wrapper.tcl
 XDC_FILES += ../../../common/syn/vivado/cmac_gty_ch_wrapper.tcl
 
+UTIL_FILES = slr_opt.tcl
+
+include ./Makefile.beehive
+
 # IP
 IP_TCL_FILES = ip/pcie4_uscale_plus_0.tcl
 IP_TCL_FILES += ip/cmac_usplus.tcl
 IP_TCL_FILES += ip/cmac_gty.tcl
 IP_TCL_FILES += ip/cms.tcl
-#IP_TCL_FILES += ip/ddr4_0.tcl
+IP_TCL_FILES += ip/ddr4_0.tcl
 
 # Configuration
 CONFIG_TCL_FILES = ./config.tcl

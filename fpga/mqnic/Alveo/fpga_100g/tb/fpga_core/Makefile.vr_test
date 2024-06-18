@@ -1,0 +1,38 @@
+export BEEHIVE_DESIGN_ROOT=$(BEEHIVE_PROJECT_ROOT)/sample_designs/beehive_vr
+
+COMPILE_ARGS += "-f ./corundum_beehive.flist"
+
+.PHONY: init_fusesoc
+init_fusesoc:
+	echo "[main]" > fusesoc.conf
+	echo "cache_root = $(PWD)" >> fusesoc.conf
+	fusesoc library add pyhp_generator $(BEEHIVE_PROJECT_ROOT)/tile_generator
+	fusesoc library add network_components $(BEEHIVE_PROJECT_ROOT)/network_tiles
+	fusesoc library add beehive_msgs $(BEEHIVE_PROJECT_ROOT)/include
+	fusesoc library add beehive_apps $(BEEHIVE_PROJECT_ROOT)/apps
+	fusesoc library add beehive_util $(BEEHIVE_PROJECT_ROOT)/util
+	fusesoc library add tcp $(BEEHIVE_PROJECT_ROOT)/protocols/tcp_slow
+	fusesoc library add basejump $(BEEHIVE_PROJECT_ROOT)/protocols/tcp_hw/basejump_files
+	fusesoc library add buckfast_common_inc $(BEEHIVE_PROJECT_ROOT)/protocols/tcp_hw/include/common
+	fusesoc library add buckfast_common $(BEEHIVE_PROJECT_ROOT)/protocols/tcp_hw/common
+	fusesoc library add buckfast_noc $(BEEHIVE_PROJECT_ROOT)/protocols/tcp_hw/noc_stuff
+	fusesoc library add buckfast_front $(BEEHIVE_PROJECT_ROOT)/protocols/tcp_hw/frontend
+	fusesoc library add beehive_converters $(BEEHIVE_PROJECT_ROOT)/corundum_fpga/fpga/app/beehive_converters
+	fusesoc library add corundum_app_test $(BEEHIVE_PROJECT_ROOT)/corundum_fpga/fpga/app/beehive_vr
+	fusesoc library add load_balance_app $(BEEHIVE_PROJECT_ROOT)/sample_designs/beehive_vr
+
+.PHONY: gen_filelist
+gen_filelist:
+	fusesoc --config=$(PWD)/fusesoc.conf run --setup --target=default --no-export uwcse:beehive:corundum_beehive_app
+	python3 $(BEEHIVE_PROJECT_ROOT)/util/scripts/generate_filelist.py --target=flist \
+	    --edam_file=build/uwcse_beehive_corundum_beehive_app_0.1/default-vivado/uwcse_beehive_corundum_beehive_app_0.1.eda.yml \
+	    --output_file=corundum_beehive.flist
+
+gen_fpga_makefile:
+	fusesoc --config=$(PWD)/fusesoc.conf run --setup --target=default --no-export uwcse:beehive:corundum_beehive_app
+	python3 $(BEEHIVE_PROJECT_ROOT)/util/scripts/generate_filelist.py \
+	    --target=corundum_fpga \
+	    --edam_file=build/uwcse_beehive_corundum_beehive_app_0.1/default-vivado/uwcse_beehive_corundum_beehive_app_0.1.eda.yml \
+	    --output_file=Makefile.beehive
+
+

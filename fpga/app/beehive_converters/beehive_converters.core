@@ -1,0 +1,23 @@
+CAPI=2:
+name: uwcse:beehive:corundum_beehive_converters:0.1
+description: Converters from Corundum to Beehive
+
+filesets:
+    rtl:
+        files:
+            - beehive_in_convert.sv
+            - beehive_out_convert.sv
+            - beehive_pkt_queue.sv
+            - mqnic_app_block_beehive.v 
+            - ../../lib/axi/rtl/axil_ram.v
+        depend:
+            - uwcse:buckfast:includes
+            - uwcse:buckfast:ram
+            - uwcse:buckfast:packet_queue
+            - uwcse:beehive:data_converters
+            - uwcse:buckfast:bsg_misc
+        file_type: systemVerilogSource
+
+targets:
+    default:
+        filesets: [rtl]

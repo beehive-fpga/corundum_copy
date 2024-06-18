@@ -53,6 +53,7 @@ module mqnic_interface_rx #
     // DMA interface configuration
     parameter DMA_ADDR_WIDTH = 64,
     parameter DMA_LEN_WIDTH = 16,
+    parameter DMA_CLIENT_LEN_WIDTH = DMA_LEN_WIDTH,
     parameter DMA_TAG_WIDTH = 16,
     parameter RAM_ADDR_WIDTH = $clog2(RX_RAM_SIZE),
     parameter RAM_SEG_COUNT = 2,
@@ -216,7 +217,6 @@ module mqnic_interface_rx #
 );
 
 parameter DMA_CLIENT_TAG_WIDTH = $clog2(RX_DESC_TABLE_SIZE);
-parameter DMA_CLIENT_LEN_WIDTH = DMA_LEN_WIDTH;
 
 parameter REQ_TAG_WIDTH = $clog2(RX_DESC_TABLE_SIZE);
 

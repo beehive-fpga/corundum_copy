@@ -11,11 +11,25 @@ add_cells_to_pblock [get_pblocks pblock_slr1] [get_cells -quiet "core_inst/core_
 add_cells_to_pblock [get_pblocks pblock_slr1] [get_cells -quiet "core_inst/core_inst/core_pcie_inst/core_inst/iface[*].interface_inst/interface_tx_inst"]
 add_cells_to_pblock [get_pblocks pblock_slr1] [get_cells -quiet "core_inst/core_inst/core_pcie_inst/core_inst/iface[*].interface_inst/tx_fifo_inst"]
 add_cells_to_pblock [get_pblocks pblock_slr1] [get_cells -quiet "core_inst/core_inst/core_pcie_inst/core_inst/iface[*].interface_inst/rx_fifo_inst"]
+add_cells_to_pblock [get_pblocks pblock_slr1] [get_cells -quiet -hierarchical -filter {NAME =~ core_inst/core_inst/core_pcie_inst/core_inst/app.app_block_inst/beehive_wrapper/slr_2to1_rx_fifo*}]
+add_cells_to_pblock [get_pblocks pblock_slr1] [get_cells -quiet -hierarchical -filter {NAME =~ core_inst/core_inst/core_pcie_inst/core_inst/app.app_block_inst/beehive_wrapper/slr_1buf_rx_fifo*}]
+add_cells_to_pblock [get_pblocks pblock_slr1] [get_cells -quiet -hierarchical -filter {NAME =~ core_inst/core_inst/core_pcie_inst/core_inst/app.app_block_inst/beehive_wrapper/slr_1buf_tx_fifo*}]
+add_cells_to_pblock [get_pblocks pblock_slr1] [get_cells -quiet -hierarchical -filter {NAME =~ core_inst/core_inst/core_pcie_inst/core_inst/app.app_block_inst/beehive_wrapper/slr_0to1_tx_fifo*}]
 resize_pblock [get_pblocks pblock_slr1] -add {SLR1}
 
 create_pblock pblock_slr2
 #add_cells_to_pblock [get_pblocks pblock_slr2] [get_cells -quiet ""]
+add_cells_to_pblock [get_pblocks pblock_slr2] [get_cells -quiet -hierarchical -filter {NAME =~ core_inst/core_inst/core_pcie_inst/core_inst/app.app_block_inst/beehive_wrapper/slr_1to2_tx_fifo*}]
+add_cells_to_pblock [get_pblocks pblock_slr2] [get_cells -quiet -hierarchical -filter {NAME =~ core_inst/core_inst/core_pcie_inst/core_inst/app.app_block_inst/beehive_wrapper/slr_2buf_rx_fifo*}]
 resize_pblock [get_pblocks pblock_slr2] -add {SLR2}
+
+create_pblock pblock_beehive
+add_cells_to_pblock [get_pblocks pblock_beehive] [get_cells -quiet -hierarchical -filter {NAME =~ core_inst/core_inst/core_pcie_inst/core_inst/app.app_block_inst/beehive_wrapper/in_convert*}]
+add_cells_to_pblock [get_pblocks pblock_beehive] [get_cells -quiet -hierarchical -filter {NAME =~ core_inst/core_inst/core_pcie_inst/core_inst/app.app_block_inst/beehive_wrapper/out_convert*}]
+add_cells_to_pblock [get_pblocks pblock_beehive] [get_cells -quiet -hierarchical -filter {NAME =~ core_inst/core_inst/core_pcie_inst/core_inst/app.app_block_inst/beehive_wrapper/beehive*}]
+add_cells_to_pblock [get_pblocks pblock_beehive] [get_cells -quiet -hierarchical -filter {NAME =~ core_inst/core_inst/core_pcie_inst/core_inst/app.app_block_inst/beehive_wrapper/slr_1to0_rx_fifo*}]
+add_cells_to_pblock [get_pblocks pblock_beehive] [get_cells -quiet -hierarchical -filter {NAME =~ core_inst/core_inst/core_pcie_inst/core_inst/app.app_block_inst/beehive_wrapper/slr_0buf_tx_fifo*}]
+resize_pblock [get_pblocks pblock_beehive] -add {SLR0}
 
 create_pblock pblock_pcie
 add_cells_to_pblock [get_pblocks pblock_pcie] [get_cells -quiet "pcie4_uscale_plus_inst"]

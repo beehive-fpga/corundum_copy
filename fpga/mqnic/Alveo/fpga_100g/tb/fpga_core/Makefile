@@ -3,11 +3,13 @@
 
 TOPLEVEL_LANG = verilog
 
-SIM ?= icarus
+SIM ?= Questa
 WAVES ?= 0
 
 COCOTB_HDL_TIMEUNIT = 1ns
 COCOTB_HDL_TIMEPRECISION = 1ps
+
+export COCOTB_RESOLVE_X=ZEROS
 
 DUT      = fpga_core
 TOPLEVEL = $(DUT)
@@ -236,6 +238,8 @@ else ifeq ($(SIM), verilator)
 endif
 
 include $(shell cocotb-config --makefiles)/Makefile.sim
+
+include ./Makefile.udp_echo
 
 iverilog_dump.v:
 	echo 'module iverilog_dump();' > $@

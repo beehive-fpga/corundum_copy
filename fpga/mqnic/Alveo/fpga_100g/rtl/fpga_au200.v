@@ -28,7 +28,7 @@ module fpga #
     parameter CMS_ENABLE = 1,
 
     // Structural configuration
-    parameter IF_COUNT = 2,
+    parameter IF_COUNT = 1,
     parameter PORTS_PER_IF = 1,
     parameter SCHED_PER_IF = PORTS_PER_IF,
     parameter PORT_MASK = 0,
@@ -85,7 +85,7 @@ module fpga #
 
     // RAM configuration
     parameter DDR_CH = 4,
-    parameter DDR_ENABLE = 0,
+    parameter DDR_ENABLE = 1,
     parameter AXI_DDR_DATA_WIDTH = 512,
     parameter AXI_DDR_ADDR_WIDTH = 34,
     parameter AXI_DDR_ID_WIDTH = 8,
@@ -93,8 +93,8 @@ module fpga #
     parameter AXI_DDR_NARROW_BURST = 0,
 
     // Application block configuration
-    parameter APP_ID = 32'h00000000,
-    parameter APP_ENABLE = 0,
+    parameter APP_ID = 32'h12340001,
+    parameter APP_ENABLE = 1,
     parameter APP_CTRL_ENABLE = 1,
     parameter APP_DMA_ENABLE = 1,
     parameter APP_AXIS_DIRECT_ENABLE = 1,

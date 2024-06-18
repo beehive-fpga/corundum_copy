@@ -3649,7 +3649,7 @@ generate
 
 if (APP_ENABLE) begin : app
 
-    mqnic_app_block #(
+    mqnic_app_block_beehive #(
         // Structural configuration
         .IF_COUNT(IF_COUNT),
         .PORTS_PER_IF(PORTS_PER_IF),
